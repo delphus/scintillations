@@ -1,0 +1,26 @@
+{
+  "name": "scintillations",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "git@gitlab.scintillating.us:scintillating/scintillations.git",
+  "author": "Kevin Liu <kevin@kliu.io>",
+  "license": "AGPL-3.0+",
+  "private": true,
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "@types/cron": "^1.7.2",
+    "cron": "^1.8.2",
+    "cross-fetch": "^3.0.4",
+    "discord.js": "^12.2.0",
+    "knex": "^0.21.1",
+    "sqlite3": "^4.2.0",
+    "winston": "^3.2.1"
+  },
+  "scripts": {
+    "start": "nodemon -w src -x ts-node src/main.ts"
+  }
+}
