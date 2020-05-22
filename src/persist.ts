@@ -1,7 +1,7 @@
 import fs from "fs";
 import logger from "./logger";
 
-const STATE_PATH = "./data.json";
+const STATE_PATH = process.env.STATE_PATH ?? "./data.json";
 
 export interface State {
   clockifyTokens: {
