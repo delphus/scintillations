@@ -1,4 +1,9 @@
 # This file is a template, and might need editing before it works on your project.
+
+variables:
+  DOCKER_HOST: tcp://docker:2376
+  DOCKER_TLS_CERTDIR: "/certs"
+
 docker-build-master:
   # Official docker image.
   image: docker:latest
