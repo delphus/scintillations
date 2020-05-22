@@ -24,17 +24,21 @@ client.on("message", async (msg) => {
     }
 
     logger.info(`Logging in ${discordUser.tag} with token ${token}`);
-    const tokenValid = await clockify.tokenValid(token);
+    try {
+      const tokenValid = await clockify.tokenValid(token);
 
-    if (tokenValid) {
-      // Save to database
-      state = saveState({
-        ...state,
-        clockifyTokens: { ...state.clockifyTokens, [discordUser.id]: token },
-      });
-      msg.channel.send("Successfully logged into Clockify.");
-    } else {
-      msg.channel.send("Invalid token; please try again.");
+      if (tokenValid) {
+        // Save to database
+        state = saveState({
+          ...state,
+          clockifyTokens: { ...state.clockifyTokens, [discordUser.id]: token },
+        });
+        msg.channel.send("Successfully logged into Clockify.");
+      } else {
+        msg.channel.send("Invalid token; please try again.");
+      }
+    } catch (e) {
+      msg.channel.send(e.toString());
     }
   }
 });
