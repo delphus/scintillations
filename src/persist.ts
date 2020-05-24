@@ -23,6 +23,6 @@ export function readState(): State {
 export function saveState(obj: State): State {
   const state = JSON.stringify(obj);
   logger.debug(`Writing state: ${state}`);
-  fs.writeFileSync("./data.json", state);
+  fs.writeFileSync(STATE_PATH, state);
   return obj;
 }
