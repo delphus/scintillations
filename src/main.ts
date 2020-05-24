@@ -1,14 +1,42 @@
-import Discord from "discord.js";
+import Discord, { TextChannel } from "discord.js";
 import logger from "./logger";
 import * as clockify from "./clockify";
 import { readState, saveState } from "./persist";
-import { ClockifyProjects, DiscordVoiceChannels } from "./config";
+import {
+  ClockifyProjects,
+  DiscordVoiceChannels,
+  SCINTILLATING_GUILD,
+  UPDATES_CHANNEL,
+} from "./config";
+import { CronJob } from "cron";
 
 const client = new Discord.Client();
 let state = readState();
 
 client.on("ready", () => {
   logger.info(`Logged in as ${client.user!.tag}!`);
+
+  new CronJob(
+    "0 22 * * 1-5",
+    async () => {
+      const updatesChannel = client.channels.resolve(
+        UPDATES_CHANNEL
+      ) as TextChannel;
+
+      await updatesChannel.send(
+        `@everyone Welcome to auto-standup-bot! Here you can write a short daily update.
+
+(1) What did you accomplish today?
+(2) What are you planning to work on?
+(3) Is anything standing in your way?
+
+Thanks!`
+      );
+    },
+    null,
+    true,
+    "America/New_York"
+  ).start();
 });
 
 client.on("message", async (msg) => {
@@ -89,6 +117,5 @@ client.on("voiceStateUpdate", async (oldMember, newMember) => {
   }
 });
 
-logger.info("hi!");
-
+logger.info("Started Scintillations bot!");
 client.login(process.env.TOKEN);
