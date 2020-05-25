@@ -2,7 +2,7 @@ import Discord, { TextChannel } from "discord.js";
 import logger from "./logger";
 import * as clockify from "./clockify";
 import { readState, saveState } from "./persist";
-import { UPDATES_CHANNEL } from "./config";
+import { STANDUP_CHANNEL } from "./config";
 import { CronJob } from "cron";
 
 const client = new Discord.Client();
@@ -15,7 +15,7 @@ client.on("ready", () => {
     "0 22 * * 1-5",
     async () => {
       const updatesChannel = client.channels.resolve(
-        UPDATES_CHANNEL
+        STANDUP_CHANNEL
       ) as TextChannel;
 
       await updatesChannel.send(
