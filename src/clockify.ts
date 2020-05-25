@@ -1,6 +1,6 @@
 import fetch from "cross-fetch";
 import logger from "./logger";
-import { ClockifyProjects, CLOCKIFY_WORKSPACE } from "./config";
+import { CLOCKIFY_WORKSPACE } from "./config";
 
 async function api(endpoint: string, token: string, method: string, body?: {}) {
   return await fetch("https://api.clockify.me/api/v1" + endpoint, {
@@ -26,8 +26,7 @@ export async function tokenValid(token: string) {
 }
 
 export async function startTimeTracking(
-  token: string,
-  projectId: ClockifyProjects
+  token: string
 ) {
   const res = await api(
     `/workspaces/${CLOCKIFY_WORKSPACE}/time-entries`,
@@ -35,8 +34,7 @@ export async function startTimeTracking(
     "POST",
     {
       start: new Date().toISOString(),
-      billable: true,
-      projectId,
+      billable: true
     }
   );
   if (!res.ok) {

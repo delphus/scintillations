@@ -2,12 +2,7 @@ import Discord, { TextChannel } from "discord.js";
 import logger from "./logger";
 import * as clockify from "./clockify";
 import { readState, saveState } from "./persist";
-import {
-  ClockifyProjects,
-  DiscordVoiceChannels,
-  SCINTILLATING_GUILD,
-  UPDATES_CHANNEL,
-} from "./config";
+import { UPDATES_CHANNEL } from "./config";
 import { CronJob } from "cron";
 
 const client = new Discord.Client();
@@ -71,20 +66,6 @@ client.on("message", async (msg) => {
   }
 });
 
-function voiceChannelToProject(
-  channelId: DiscordVoiceChannels
-): ClockifyProjects {
-  const map = {
-    [DiscordVoiceChannels.APPLICATIONS]: ClockifyProjects.APPLICATIONS,
-    [DiscordVoiceChannels.MARKETING]: ClockifyProjects.MARKETING,
-    [DiscordVoiceChannels.OPERATIONS]: ClockifyProjects.OPERATIONS,
-    [DiscordVoiceChannels.TECH]: ClockifyProjects.TECH,
-  };
-  const projectId = map[channelId];
-  logger.debug(`Converted channel id ${channelId} to ${projectId}`);
-  return map[channelId];
-}
-
 client.on("voiceStateUpdate", async (oldMember, newMember) => {
   const newUserChannel = newMember.channelID;
   const oldUserChannel = oldMember.channelID;
@@ -107,10 +88,7 @@ client.on("voiceStateUpdate", async (oldMember, newMember) => {
     // User joins a voice channel
     logger.info(newMember.id + " joined " + newUserChannel);
     try {
-      await clockify.startTimeTracking(
-        state.clockifyTokens[newMember.id],
-        voiceChannelToProject(newUserChannel as DiscordVoiceChannels)
-      );
+      await clockify.startTimeTracking(state.clockifyTokens[newMember.id]);
     } catch (e) {
       newMember.member?.send(e.toString());
     }
