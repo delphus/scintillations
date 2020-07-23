@@ -1,6 +1,6 @@
 import fetch from "cross-fetch";
-import logger from "./logger";
-import { CLOCKIFY_WORKSPACE } from "./config";
+import logger from "../../logger";
+import { CLOCKIFY_WORKSPACE } from "../../config";
 
 async function api(endpoint: string, token: string, method: string, body?: {}) {
   return await fetch("https://api.clockify.me/api/v1" + endpoint, {

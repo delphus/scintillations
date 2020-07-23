@@ -21,6 +21,6 @@
     "winston": "^3.2.1"
   },
   "scripts": {
-    "start": "nodemon -w src -x ts-node src/main.ts"
+    "start": "nodemon -w src -x ts-node-script src/main.ts"
   }
 }
