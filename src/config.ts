@@ -9,3 +9,5 @@ export const DiscordVoiceChannels = [
 export const SCINTILLATING_GUILD = "453326248043872317";
 export const STANDUP_CHANNEL = "714580237794410517";
 export const ADMINISTRATIVE_CHANNEL = "593842932075855891";
+
+export const DELPHUS_PROJECT_ID = 3;
