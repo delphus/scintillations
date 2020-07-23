@@ -1,6 +1,7 @@
 import { Client } from "discord.js";
 import { Gitlab } from "@gitbeaker/node";
 import { DELPHUS_PROJECT_ID } from "../config";
+import { parseArguments } from "../message-parser";
 
 if (!process.env.GITLAB_TOKEN) {
   throw new Error("GitLab integration requires specifying a GitLab token.");
@@ -13,7 +14,7 @@ const api = new Gitlab({
 
 export default function gitlabModule(client: Client) {
   client.on("message", async (msg) => {
-    const parts = msg.content.split(" ");
+    const parts = parseArguments(msg.content);
     if (parts.length !== 3) {
       return;
     }
