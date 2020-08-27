@@ -4,7 +4,7 @@ import { STANDUP_CHANNEL } from "../config";
 
 export default function standupModule(client: Client) {
   new CronJob(
-    "0 22 * * 1-5",
+    "0 22 * * 0",
     async () => {
       const updatesChannel = client.channels.resolve(
         STANDUP_CHANNEL
